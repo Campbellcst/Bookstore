@@ -1,0 +1,19 @@
+.book {
+    display: flex;
+    flex-wrap: wrap; /* This allows books to wrap to the next line if needed */
+    margin: 20px; /* Add some margin for spacing */
+  }
+  
+  .book ul {
+    flex: 20%; /* Makes each book list item flexible and take up equal space */
+    margin: 0 10px; /* Add some margin between books */
+    padding: 10px; /* Add some padding inside each book */
+    border: 1px solid #ddd; /* Add a border for better visualization */
+    list-style: none; /* Remove default bullet points */
+  }
+  
+  .book ul li {
+    text-align: center; /* Center the content within each book */
+  }
+
+  

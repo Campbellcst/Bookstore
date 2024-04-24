@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bookstore</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header> 
+        <h1>Online Bookstore</h1>
+    </header>
+
+    <main>
+        <section id="search">
+            <form>
+                <label>Search:</label>
+                <input type="text" id="search">
+                <button>Search</button>
+            </form>
+        </section>
+
+        <nav> 
+            <button type="button" onclick="location.href='checkout.html'">Checkout</button>
+            <button type="button" onclick="location.href='login.html'">Login</button>
+            <button type="button" onclick="location.href='profile.html'">Profile</button>
+        </nav>
+
+        <section id="filter">
+            <h2>Filter by Genre</h2>
+            <select id="genre-filter">
+              <option value="All">All Genres</option>
+              <option value="Fantasy">Fantasy</option>
+              <option value="Mystery">Mystery</option>
+              <option value="Romance">Romance</option>
+              </select>
+          </section>
+        
+        <section id="books">
+            <h2>Browse Books</h2>
+            <div class="book">
+                <ul data-genre="Fantasy">
+                    <li><img src="https://placehold.co/200x300" alt="book1"></li>
+                    <li>Book Title</li>
+                    <li>Author</li>
+                    <li>Price</li>
+                    <li><button>Add to Cart</button></li>
+                </ul>
+                <ul data-genre="Fantasy">
+                    <li><img src="https://placehold.co/200x300" alt="book1"></li>
+                    <li>Book Title</li>
+                    <li>Author</li>
+                    <li>Price</li>
+                    <li><button>Add to Cart</button></li>
+                </ul>
+                <ul data-genre="Mystery">
+                    <li><img src="https://placehold.co/200x300" alt="book1"></li>
+                    <li>Book Title</li>
+                    <li>Author</li>
+                    <li>Price</li>
+                    <li><button>Add to Cart</button></li>
+                </ul>
+                <ul data-genre="Mystery">
+                    <li><img src="https://placehold.co/200x300" alt="book1"></li>
+                    <li>Book Title</li>
+                    <li>Author</li>
+                    <li>Price</li>
+                    <li><button>Add to Cart</button></li>
+                </ul>
+                <ul data-genre="Mystery">
+                    <li><img src="https://placehold.co/200x300" alt="book1"></li>
+                    <li>Book Title</li>
+                    <li>Author</li>
+                    <li>Price</li>
+                    <li><button>Add to Cart</button></li>
+                </ul>
+                <ul data-genre="Romance">
+                    <li><img src="https://placehold.co/200x300" alt="book1"></li>
+                    <li>Book Title</li>
+                    <li>Author</li>
+                    <li>Price</li>
+                    <li><button>Add to Cart</button></li>
+                </ul>
+                <ul data-genre="Romance">
+                    <li><img src="https://placehold.co/200x300" alt="book1"></li>
+                    <li>Book Title</li>
+                    <li>Author</li>
+                    <li>Price</li>
+                    <li><button>Add to Cart</button></li>
+                </ul>
+                <ul data-genre="Fantasy">
+                    <li><img src="https://placehold.co/200x300" alt="book1"></li>
+                    <li>Book Title</li>
+                    <li>Author</li>
+                    <li>Price</li>
+                    <li><button>Add to Cart</button></li>
+                </ul>
+            </div>
+        </section>
+    </main>
+</body>
+</html>
