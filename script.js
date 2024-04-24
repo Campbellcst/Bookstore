@@ -2,7 +2,8 @@ const loginForm = document.getElementById("login-form");
 const userInputName = document.getElementById("username");
 const userInputPassword = document.getElementById("password");
 const submitBtn = document.getElementById("submit-btn");
-const messageDisplay = document.getElementById("message");
+const messageDisplayHome = document.getElementById("message-home");
+const messageDisplayLogin = document.getElementById("message-login");
 
 const validUsers = [
   { username: "manager", password: "manager123" },
@@ -16,15 +17,17 @@ const checkValidUser = () => {
       user.password === userInputPassword.value
   );
   if (foundUser) {
-    messageDisplay.innerHTML = `Welcome, ${foundUser.username}! You are logged in.`;
+    const isManager = foundUser.username === "manager";
+    localStorage.setItem("isManager", isManager);
+    window.location.href = "home.html";
   } else {
-    messageDisplay.innerHTML = "Invalid username or password.";
+    messageDisplayLogin.innerHTML = "Invalid username or password.";
   }
 };
 
 loginForm.addEventListener("submit", (e) => {
   e.preventDefault();
   checkValidUser();
-  userInputName = "";
-  userInputPassword = "";
+  userInputName.value = "";
+  userInputPassword.value = "";
 });

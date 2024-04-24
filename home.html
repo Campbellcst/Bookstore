@@ -1,102 +1,102 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Bookstore</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <header> 
-        <h1>Online Bookstore</h1>
-    </header>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div id="home-top">
+      <h1 id="home-h1">Online Bookstore</h1>
+      <section id="search">
+        <form>
+          <label>Search:</label>
+          <input type="text" id="search-input" />
+          <!-- Fixed duplicate ID -->
+          <button>Search</button>
+        </form>
+      </section>
+      <nav>
+        <button type="button" onclick="location.href='checkout.html'">
+          Checkout
+        </button>
+        <button type="button" onclick="location.href='login.html'">
+          Login
+        </button>
+        <button type="button" onclick="location.href='profile.html'">
+          Profile
+        </button>
+      </nav>
+    </div>
+    <div id="message-home"></div>
+    <section id="filter">
+      <h2>Filter by Genre</h2>
+      <select id="genre-filter">
+        <option value="All">All Genres</option>
+        <option value="Fantasy">Fantasy</option>
+        <option value="Mystery">Mystery</option>
+        <option value="Romance">Romance</option>
+      </select>
+    </section>
+    <section id="books">
+      <h2>Browse Books</h2>
+      <div class="book-list"></div>
+    </section>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const books = [
+          {
+            title: "The Great Gatsby",
+            author: "F. Scott Fitzgerald",
+            genre: "Mystery",
+            price: "$15",
+            imgUrl: "https://placehold.co/200x300",
+          },
+          {
+            title: "War and Peace",
+            author: "Leo Tolstoy",
+            genre: "Romance",
+            price: "$20",
+            imgUrl: "https://placehold.co/200x300",
+          },
+          {
+            title: "The Hobbit",
+            author: "J.R.R. Tolkien",
+            genre: "Fantasy",
+            price: "$18",
+            imgUrl: "https://placehold.co/200x300",
+          },
+        ];
 
-    <main>
-        <section id="search">
-            <form>
-                <label>Search:</label>
-                <input type="text" id="search">
-                <button>Search</button>
-            </form>
-        </section>
+        const isManager = localStorage.getItem("isManager") === "true";
+        const messageDisplay = document.getElementById("message-home");
+        const bookList = document.querySelector(".book-list");
 
-        <nav> 
-            <button type="button" onclick="location.href='checkout.html'">Checkout</button>
-            <button type="button" onclick="location.href='login.html'">Login</button>
-            <button type="button" onclick="location.href='profile.html'">Profile</button>
-        </nav>
+        if (isManager) {
+          messageDisplay.innerHTML = "Welcome, Manager! You are logged in.";
+        } else {
+          messageDisplay.innerHTML = "Welcome, Member! You are logged in.";
+        }
 
-        <section id="filter">
-            <h2>Filter by Genre</h2>
-            <select id="genre-filter">
-              <option value="All">All Genres</option>
-              <option value="Fantasy">Fantasy</option>
-              <option value="Mystery">Mystery</option>
-              <option value="Romance">Romance</option>
-              </select>
-          </section>
-        
-        <section id="books">
-            <h2>Browse Books</h2>
-            <div class="book">
-                <ul data-genre="Fantasy">
-                    <li><img src="https://placehold.co/200x300" alt="book1"></li>
-                    <li>Book Title</li>
-                    <li>Author</li>
-                    <li>Price</li>
-                    <li><button>Add to Cart</button></li>
-                </ul>
-                <ul data-genre="Fantasy">
-                    <li><img src="https://placehold.co/200x300" alt="book1"></li>
-                    <li>Book Title</li>
-                    <li>Author</li>
-                    <li>Price</li>
-                    <li><button>Add to Cart</button></li>
-                </ul>
-                <ul data-genre="Mystery">
-                    <li><img src="https://placehold.co/200x300" alt="book1"></li>
-                    <li>Book Title</li>
-                    <li>Author</li>
-                    <li>Price</li>
-                    <li><button>Add to Cart</button></li>
-                </ul>
-                <ul data-genre="Mystery">
-                    <li><img src="https://placehold.co/200x300" alt="book1"></li>
-                    <li>Book Title</li>
-                    <li>Author</li>
-                    <li>Price</li>
-                    <li><button>Add to Cart</button></li>
-                </ul>
-                <ul data-genre="Mystery">
-                    <li><img src="https://placehold.co/200x300" alt="book1"></li>
-                    <li>Book Title</li>
-                    <li>Author</li>
-                    <li>Price</li>
-                    <li><button>Add to Cart</button></li>
-                </ul>
-                <ul data-genre="Romance">
-                    <li><img src="https://placehold.co/200x300" alt="book1"></li>
-                    <li>Book Title</li>
-                    <li>Author</li>
-                    <li>Price</li>
-                    <li><button>Add to Cart</button></li>
-                </ul>
-                <ul data-genre="Romance">
-                    <li><img src="https://placehold.co/200x300" alt="book1"></li>
-                    <li>Book Title</li>
-                    <li>Author</li>
-                    <li>Price</li>
-                    <li><button>Add to Cart</button></li>
-                </ul>
-                <ul data-genre="Fantasy">
-                    <li><img src="https://placehold.co/200x300" alt="book1"></li>
-                    <li>Book Title</li>
-                    <li>Author</li>
-                    <li>Price</li>
-                    <li><button>Add to Cart</button></li>
-                </ul>
-            </div>
-        </section>
-    </main>
-</body>
+        function createBookElement(book) {
+          const ul = document.createElement("ul");
+          ul.innerHTML = `
+          <li><img src="${book.imgUrl}" /></li>
+          <li>${book.title}</li>
+          <li>${book.author}</li>
+          <li>${book.price}</li>
+          <li><button>Add to Cart</button></li>
+        `;
+          ul.setAttribute("data-genre", book.genre);
+          return ul;
+        }
+
+        books.forEach((book) => {
+          const bookElement = createBookElement(book);
+          bookList.appendChild(bookElement);
+        });
+      });
+    </script>
+  </body>
 </html>
