@@ -1,31 +1,91 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Profile</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
     <section id="home">
-        <button><a href="home.html">Auburn Bookstore</a></button>
+      <button><a href="home.html">Auburn Bookstore</a></button>
     </section>
-
-   
-    
 
     <h1>Profile</h1>
     <section id="fields">
-        <p>Username: <span id="username" contenteditable="false">null</span></p>
-        <p>Email: <span id="email" contenteditable="false">null</span></p>
-        <p>Phone: <span id="phone" contenteditable="false">null</span></p>
-        <p>Address: <span id="address" contenteditable="false">null</span></p>
-        <p>Payment Info: <span id="payment-info" contenteditable="false">null</span></p>
+      <p>Username: <span id="username" contenteditable="false"></span></p>
+      <p>Email: <span id="email" contenteditable="false"></span></p>
+      <p>Phone: <span id="phone" contenteditable="false"></span></p>
+      <p>Address: <span id="address" contenteditable="false"></span></p>
+      <p>
+        Payment Info: <span id="payment-info" contenteditable="false"></span>
+      </p>
     </section>
 
     <button onclick="toggleEdit()">Edit Profile</button>
-    <button id="save-changes" onclick="saveChanges()">Save Changes</button>
-    
-    <script src="script.js"></script> 
-</body>
+    <button id="save-changes" onclick="saveChanges()" style="display: none">
+      Save Changes
+    </button>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        loadUserProfile();
+      });
+
+      function loadUserProfile() {
+        const userType = localStorage.getItem("userType");
+        const userDetails = {
+          manager: {
+            username: "manager",
+            email: "manager@example.com",
+            phone: "123-456-7890",
+            address: "1234 Main St",
+            paymentInfo: "Visa **** **** **** 1234",
+          },
+          member: {
+            username: "member",
+            email: "member@example.com",
+            phone: "098-765-4321",
+            address: "4321 Side St",
+            paymentInfo: "MasterCard **** **** **** 4321",
+          },
+        };
+
+        // Get the details for the logged-in user type
+        const details = userDetails[userType] || {};
+        document.getElementById("username").textContent =
+          details.username || "N/A";
+        document.getElementById("email").textContent = details.email || "N/A";
+        document.getElementById("phone").textContent = details.phone || "N/A";
+        document.getElementById("address").textContent =
+          details.address || "N/A";
+        document.getElementById("payment-info").textContent =
+          details.paymentInfo || "N/A";
+      }
+
+      function toggleEdit() {
+        var fields = document.querySelectorAll("#fields span");
+        var editMode = fields[0].getAttribute("contenteditable") === "true";
+        fields.forEach((element) => {
+          element.setAttribute("contenteditable", !editMode);
+        });
+        document.getElementById("save-changes").style.display = editMode
+          ? "none"
+          : "block";
+      }
+
+      function saveChanges() {
+        const userDetails = {
+          username: document.getElementById("username").textContent,
+          email: document.getElementById("email").textContent,
+          phone: document.getElementById("phone").textContent,
+          address: document.getElementById("address").textContent,
+          paymentInfo: document.getElementById("payment-info").textContent,
+        };
+        const userType = localStorage.getItem("userType"); // Retrieve user type
+        localStorage.setItem(userType + "Details", JSON.stringify(userDetails)); // Save under dynamic key based on user type
+        toggleEdit(); // Reset edit mode after saving
+      }
+    </script>
+  </body>
 </html>

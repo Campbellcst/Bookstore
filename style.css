@@ -1,85 +1,106 @@
 body {
-    margin: 0;
-    padding: 0;
-    height: 100vh;
-    box-sizing: border-box;
-  }
-  
-  button {
-    border-radius: 0.5em;
-  }
-  
-  input {
-    border-radius: 0.5em;
-    padding: 0.3em 0.1em;
-  }
-  
-  #main-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background-color: red;
-    height: 100vh;
-  }
-  
-  #main-content {
-    padding: 1em;
-    background-color: green;
-    border-radius: 0.5em;
-    box-shadow: 0.5em 0.2em 5em black;
-  }
-  
-  #message-home,
-  #message-login {
-    text-align: center;
-    font-size: 2rem;
-  }
-  
-  #message-login {
-    margin-top: 1em;
-  }
-  
-  #login-form {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  #home-top {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 1em;
-    margin-right: 1em;
-    margin-left: 1em;
-  }
-  
-  #home-h1 {
-    margin-bottom: 1em;
-  }
-  
-  .book {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    margin: 1em 0;
-  }
-  
-  .book ul {
-    flex: 1 1 1em;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 0 1em;
-    padding: 1em;
-    border: 0.1em solid #ddd;
-    list-style: none;
-  }
-  
-  .book ul li {
-    padding: 0.5em 0;
-  }
-  #save-changes {
-    display: none; /* Initially hide the button */
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  box-sizing: border-box;
 }
-  
+
+button {
+  border-radius: 0.5em;
+}
+
+input {
+  border-radius: 0.5em;
+  padding: 0.3em 0.1em;
+}
+
+#home-main-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 1em 2em;
+}
+
+#main-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+#main-content {
+  padding: 1em;
+  border-radius: 0.5em;
+  box-shadow: 0.5em 0.2em 5em black;
+}
+
+#message-home,
+#message-login {
+  text-align: center;
+  font-size: 2rem;
+}
+
+#message-login {
+  margin-top: 1em;
+}
+
+#login-form {
+  display: flex;
+  flex-direction: column;
+}
+
+#home-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1em;
+  margin-right: 1em;
+  margin-left: 1em;
+}
+
+#home-h1 {
+  margin-bottom: 1em;
+}
+
+#add-book-display {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1em;
+}
+
+#addBookForm {
+  display: flex;
+  flex-direction: column;
+}
+
+.book-img {
+  width: 200px;
+  height: 200px;
+}
+
+.book-list {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+#bookListDisplay {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+.book div {
+  flex: 1 1 1em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 1em;
+  border: 0.1em solid #ddd;
+  list-style: none;
+}
+
+#save-changes {
+  display: none;
+}

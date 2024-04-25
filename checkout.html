@@ -1,49 +1,150 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Checkout</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
     <section id="Auburn Bookstore">
-        <button><a href="home.html">Home</a></button>
+      <button><a href="home.html">Home</a></button>
     </section>
-    
+
     <h1>Checkout</h1>
-    <h2>Basket </h2>
-    <p>Total Price: </p>
-    
+    <div id="basket">
+      <h3>Basket Items</h3>
+      <div id="cart-items-list"></div>
+    </div>
+    <p id="totalPrice">Total Price:</p>
+
     <button id="checkoutBtn">Checkout</button>
 
-    <div id="checkoutInfo" style="display: none;">
+    <form id="paymentForm">
+      <div id="checkoutInfo" style="display: none">
         <h2>Shipping Address</h2>
-            <input type="text" id="address" placeholder="Address">
-            <input type="text" id="city" placeholder="City">
-            <input type="text" id="state" placeholder="State">
-            <input type="text" id="zip" placeholder="Zip">
+        <input
+          type="text"
+          id="address"
+          name="address"
+          placeholder="Address"
+          required
+        />
+        <input type="text" id="city" name="city" placeholder="City" required />
+        <input
+          type="text"
+          id="state"
+          name="state"
+          placeholder="State"
+          required
+        />
+        <input type="text" id="zip" name="zip" placeholder="Zip" required />
+
         <h2>Payment Info</h2>
-            <input type="text" id="card-number" placeholder="Card Number">
-            <input type="text" id="expiration" placeholder="Expiration">
-            <input type="text" id="cvv" placeholder="CVV">
+        <input
+          type="text"
+          id="card-number"
+          name="cardNumber"
+          placeholder="Card Number"
+          required
+        />
+        <input
+          type="text"
+          id="expiration"
+          name="expiration"
+          placeholder="Expiration"
+          required
+        />
+        <input type="text" id="cvv" name="cvv" placeholder="CVV" required />
+
         <h2>Gift?</h2>
-            <label><input type="radio" name="gift" value="yes" onchange="toggleGiftMessage()">Yes</label>
-            <label><input type="radio" name="gift" value="no" onchange="toggleGiftMessage()">No</label>
-            <input type="text" id="gift-message" placeholder="Gift Message">
-        <br><br><button id="confirmBtn" onclick="showMessage()">Confirm Payment?</button>
-    </div>
-    
+        <label
+          ><input
+            type="radio"
+            name="gift"
+            value="yes"
+            onchange="toggleGiftMessage()"
+          />Yes</label
+        >
+        <label
+          ><input
+            type="radio"
+            name="gift"
+            value="no"
+            onchange="toggleGiftMessage()"
+          />No</label
+        >
+        <input
+          type="text"
+          id="gift-message"
+          name="giftMessage"
+          placeholder="Gift Message"
+        />
+
+        <br /><br />
+        <button type="submit" id="confirmBtn">Confirm Payment</button>
+      </div>
+    </form>
     <script>
-        const checkoutButton = document.getElementById('checkoutBtn');
-        const checkoutInfo = document.getElementById('checkoutInfo');
+      document.addEventListener("DOMContentLoaded", () => {
+        loadCartItems();
+        setupEventListeners();
+        setupFormSubmission();
+      });
 
-        checkoutButton.addEventListener('click', function() {
-            checkoutInfo.style.display = 'block';
+      function setupFormSubmission() {
+        const form = document.getElementById("paymentForm");
+        form.addEventListener("submit", (event) => {
+          event.preventDefault();
+          processPayment();
         });
-    </script>
-    
-    
-</body>
-</html>
+      }
 
+      function loadCartItems() {
+        const cart = JSON.parse(localStorage.getItem("cart")) || [];
+        const cartItemsList = document.getElementById("cart-items-list");
+        cartItemsList.innerHTML = ""; // Clear existing items
+
+        cart.forEach((item, index) => {
+          const itemDiv = document.createElement("div");
+          itemDiv.innerHTML = `${item.title} - ${item.price} <button onclick="deleteCartItem(${index})">Remove</button>`;
+          cartItemsList.appendChild(itemDiv);
+        });
+      }
+
+      function deleteCartItem(index) {
+        const cart = JSON.parse(localStorage.getItem("cart")) || [];
+        cart.splice(index, 1);
+        localStorage.setItem("cart", JSON.stringify(cart));
+        loadCartItems(); // Refresh the list after removing an item
+      }
+
+      function setupEventListeners() {
+        const checkoutButton = document.getElementById("checkoutBtn");
+        const checkoutInfo = document.getElementById("checkoutInfo");
+
+        checkoutButton.addEventListener("click", () => {
+          checkoutInfo.style.display = "block";
+        });
+
+        document.querySelectorAll('input[name="gift"]').forEach((radio) => {
+          radio.addEventListener("change", toggleGiftMessage);
+        });
+      }
+
+      function toggleGiftMessage() {
+        const giftYes = document.querySelector(
+          'input[name="gift"][value="yes"]'
+        ).checked;
+        const giftMessageInput = document.getElementById("gift-message");
+        giftMessageInput.style.display = giftYes ? "block" : "none";
+      }
+
+      function processPayment() {
+        alert("Payment has been confirmed!");
+        localStorage.removeItem("cart");
+        window.location.reload();
+      }
+    </script>
+  </body>
+</html>

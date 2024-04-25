@@ -3,17 +3,17 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Bookstore</title>
-    <link rel="stylesheet" href="style.css" />
+    <title>Home</title>
+    <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
     <div id="home-top">
-      <h1 id="home-h1">Online Bookstore</h1>
+      <h1 id="home-h1">Auburn Bookstore</h1>
+      <button id="addBookBtn" style="display: none">Add Book</button>
       <section id="search">
         <form>
           <label>Search:</label>
           <input type="text" id="search-input" />
-          <!-- Fixed duplicate ID -->
           <button>Search</button>
         </form>
       </section>
@@ -30,73 +30,168 @@
       </nav>
     </div>
     <div id="message-home"></div>
-    <section id="filter">
-      <h2>Filter by Genre</h2>
-      <select id="genre-filter">
-        <option value="All">All Genres</option>
-        <option value="Fantasy">Fantasy</option>
-        <option value="Mystery">Mystery</option>
-        <option value="Romance">Romance</option>
-      </select>
-    </section>
-    <section id="books">
-      <h2>Browse Books</h2>
-      <div class="book-list"></div>
-    </section>
+    <div id="add-book-display">
+      <div id="addBookForm" style="display: none">
+        <h3>Add New Book</h3>
+        <form id="bookForm">
+          <label for="bookTitle">Title:</label>
+          <input type="text" id="bookTitle" required /><br />
+          <label for="bookAuthor">Author:</label>
+          <input type="text" id="bookAuthor" required /><br />
+          <label for="bookGenre">Genre:</label>
+          <input type="text" id="bookGenre" required /><br />
+          <label for="bookPrice">Price:</label>
+          <input type="text" id="bookPrice" required /><br />
+          <label for="bookImgUrl">Image URL:</label>
+          <input type="text" id="bookImgUrl" required /><br />
+          <button type="submit">Add Book</button>
+        </form>
+      </div>
+    </div>
+    <div id="home-main-content">
+      <section id="filter">
+        <h2>Filter by Genre</h2>
+        <select id="genre-filter">
+          <option value="All">All Genres</option>
+          <option value="Fantasy">Fantasy</option>
+          <option value="Mystery">Mystery</option>
+          <option value="Romance">Romance</option>
+        </select>
+      </section>
+      <section id="books">
+        <h2>Browse Books</h2>
+        <div class="book-list"></div>
+      </section>
+    </div>
     <script>
       document.addEventListener("DOMContentLoaded", () => {
-        const books = [
+        let books = [
           {
             title: "The Great Gatsby",
             author: "F. Scott Fitzgerald",
             genre: "Mystery",
             price: "$15",
-            imgUrl: "https://placehold.co/200x300",
+            imgUrl:
+              "https://i5.walmartimages.com/seo/The-Great-Gatsby-The-Only-Authorized-Edition-Paperback-9781982146702_39f6739a-8db8-4b6d-bf43-b5bd2c343920.de4be5ca5bf90efb09dffcde5f349b61.jpeg?odnHeight=640&odnWidth=640&odnBg=FFFFFF",
           },
           {
             title: "War and Peace",
             author: "Leo Tolstoy",
             genre: "Romance",
             price: "$20",
-            imgUrl: "https://placehold.co/200x300",
+            imgUrl:
+              "https://i.ebayimg.com/images/g/CoAAAOSwbatf~uDM/s-l960.jpg",
           },
           {
             title: "The Hobbit",
             author: "J.R.R. Tolkien",
             genre: "Fantasy",
             price: "$18",
-            imgUrl: "https://placehold.co/200x300",
+            imgUrl:
+              "https://m.media-amazon.com/images/I/41R23wIsc-L._SY445_SX342_.jpg",
           },
         ];
 
-        const isManager = localStorage.getItem("isManager") === "true";
+        const userType = localStorage.getItem("userType");
         const messageDisplay = document.getElementById("message-home");
+        const addBookBtn = document.getElementById("addBookBtn");
+        const addBookForm = document.getElementById("addBookForm");
         const bookList = document.querySelector(".book-list");
 
-        if (isManager) {
+        if (userType === "manager") {
           messageDisplay.innerHTML = "Welcome, Manager! You are logged in.";
+          addBookBtn.style.display = "block";
+          addBookBtn.addEventListener(
+            "click",
+            () => (addBookForm.style.display = "block")
+          );
         } else {
           messageDisplay.innerHTML = "Welcome, Member! You are logged in.";
         }
 
-        function createBookElement(book) {
-          const ul = document.createElement("ul");
-          ul.innerHTML = `
-          <li><img src="${book.imgUrl}" /></li>
-          <li>${book.title}</li>
-          <li>${book.author}</li>
-          <li>${book.price}</li>
-          <li><button>Add to Cart</button></li>
-        `;
-          ul.setAttribute("data-genre", book.genre);
-          return ul;
+        books.forEach((book) => {
+          bookList.appendChild(createBookElement(book));
+        });
+
+        document
+          .getElementById("bookForm")
+          .addEventListener("submit", function (event) {
+            event.preventDefault();
+            const newBook = {
+              title: document.getElementById("bookTitle").value,
+              author: document.getElementById("bookAuthor").value,
+              genre: document.getElementById("bookGenre").value,
+              price: document.getElementById("bookPrice").value,
+              imgUrl: document.getElementById("bookImgUrl").value,
+            };
+
+            if (
+              newBook.title &&
+              newBook.author &&
+              newBook.genre &&
+              newBook.price &&
+              newBook.imgUrl
+            ) {
+              books.push(newBook);
+              bookList.appendChild(createBookElement(newBook));
+              addBookForm.style.display = "none";
+              this.reset();
+            } else {
+              alert("All fields must be filled out.");
+            }
+          });
+
+        function addToCart(bookTitle) {
+          const book = books.find((b) => b.title === bookTitle);
+          if (book) {
+            let cart = JSON.parse(localStorage.getItem("cart")) || [];
+            cart.push(book);
+            localStorage.setItem("cart", JSON.stringify(cart));
+            alert("Added to cart: " + bookTitle);
+          } else {
+            alert("Book not found!");
+          }
         }
 
-        books.forEach((book) => {
-          const bookElement = createBookElement(book);
-          bookList.appendChild(bookElement);
+        bookList.addEventListener("click", function (event) {
+          if (event.target.classList.contains("add-to-cart-btn")) {
+            const bookTitle = event.target
+              .closest(".book")
+              .querySelector("p").textContent;
+            addToCart(bookTitle);
+          } else if (event.target.classList.contains("delete-book-btn")) {
+            const bookTitle = event.target.getAttribute("data-title");
+            deleteBook(bookTitle, event.target.closest(".book"));
+          }
         });
+
+        function deleteBook(title, bookElement) {
+          books = books.filter((book) => book.title !== title);
+          bookElement.remove();
+        }
+
+        function createBookElement(book) {
+          const isManager = localStorage.getItem("userType") === "manager";
+          const bookElement = document.createElement("div");
+          bookElement.className = "book";
+          bookElement.setAttribute("data-genre", book.genre);
+          bookElement.innerHTML = `
+            <img class='book-img' src="${book.imgUrl}" />
+            <p>${book.title}</p>
+            <p>${book.author}</p>
+            <p>${book.price}</p>
+            <button class='add-to-cart-btn'>Add to Cart</button>
+            ${
+              isManager
+                ? `<button class='delete-book-btn' data-title="${book.title}">Delete</button>`
+                : ""
+            }
+          `;
+          return bookElement;
+        }
       });
     </script>
+
+    <script src="script.js"></script>
   </body>
 </html>
