@@ -1,13 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-  </head>
-  <body>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
     <section id="home">
-      <button><a href="home.html">Home</a></button>
+        <button><a href="home.html">Auburn Bookstore</a></button>
     </section>
-  </body>
+
+   
+    
+
+    <h1>Profile</h1>
+    <section id="fields">
+        <p>Username: <span id="username" contenteditable="false">null</span></p>
+        <p>Email: <span id="email" contenteditable="false">null</span></p>
+        <p>Phone: <span id="phone" contenteditable="false">null</span></p>
+        <p>Address: <span id="address" contenteditable="false">null</span></p>
+        <p>Payment Info: <span id="payment-info" contenteditable="false">null</span></p>
+    </section>
+
+    <button onclick="toggleEdit()">Edit Profile</button>
+    <button id="save-changes" onclick="saveChanges()">Save Changes</button>
+    
+    <script src="script.js"></script> 
+</body>
 </html>
